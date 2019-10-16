@@ -73,11 +73,11 @@ is_rule(Rule):-
 
 % Creates a lambda predicate
 % make_lambda(+Expression,-Predicate)
-make_lambda(Expression,Predicate):-
-    make_lambda(Expression,Predicate,_).
+make_lambda(Expression,lambdas:Predicate):-
+    make_lambda(Expression,lambdas:Predicate,_).
 % Creates a lambda predicate, and gives you the reference
 % make_lambda(+Expression,-Predicate,-Reference)
-make_lambda(Expression,Predicate,Reference):-
+make_lambda(Expression,lambdas:Predicate,Reference):-
     is_lambda_ex(Expression,Arguments,Rules),
     length(Arguments,Arity),
     new_name(Predicate,Arity),
@@ -122,13 +122,13 @@ new_name(Name,Arity):-
 new_name(Name,Arity,Seq):-
     string_concat("lambda",Seq,Name_STR),
     term_string(Name,Name_STR),
-    not(exists_as(Name,Arity)).
+    not(exists_as(lambdas:Name,Arity)).
 new_name(Name,Arity,Seq):-
     Next is Seq+1,
     new_name(Name,Arity,Next).
 % Confirms that a predicate name already exists
 % exists_as(+Name,+Arity)
-exists_as(Name,Arity):-
+exists_as(lambdas:Name,Arity):-
     is_ref(_,Name,Arity).
 
 % lambda_map replaces maplist, just instead of a predicate name a 
